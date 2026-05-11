@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
+const path = require('path');
 require('dotenv').config();
 
 const app = express();
@@ -9,6 +10,7 @@ const PORT = process.env.PORT || 5000;
 
 app.use(cors());
 app.use(express.json());
+app.use('/invoice', express.static(path.join(__dirname, 'invoice')));
 
 // Mock Data
 const users = [
@@ -38,12 +40,12 @@ const users = [
 ];
 
 const tickets = [
-  { 
-    id: 1, 
-    title: 'Cannot access Exchange', 
-    description: 'I am getting a 403 error when trying to open Exchange admin center.', 
-    severity: 'B', 
-    email: 'lekan@halalfood2021.onmicrosoft.com', 
+  {
+    id: 1,
+    title: 'Cannot access Exchange',
+    description: 'I am getting a 403 error when trying to open Exchange admin center.',
+    severity: 'B',
+    email: 'lekan@halalfood2021.onmicrosoft.com',
     phone: '+44 123456789',
     status: 'Open',
     createdAt: new Date().toISOString(),
@@ -90,9 +92,9 @@ const products = {
 };
 
 const invoices = [
-  { id: 'E0489YUP4K', date: '03/09/2024', amount: '£3840.00', status: 'Active', pay: 'Paid', account: 'Halal Food Foundation', billin: 'N/A' },
-  { id: 'EO890DBU6', date: '11/01/2024', amount: '£1728.00', status: 'Active', pay: 'Paid', account: 'Halal Food Foundation', billin: 'N/A' },
-  { id: 'E0839AFF3U', date: '12/02/2024', amount: '£22857.19', status: 'Active', pay: 'Paid', account: 'Halal Food Foundation', billin: 'N/A' },
+  { id: 'E0489YUP4K', date: '03/09/2024', amount: '£3840.00', status: 'Active', pay: 'Paid', account: 'Halal Food Foundation', billin: 'N/A', pdf: 'invoice 1.pdf' },
+  { id: 'EO890DBU6', date: '11/01/2024', amount: '£1728.00', status: 'Active', pay: 'Paid', account: 'Halal Food Foundation', billin: 'N/A', pdf: 'invoice 2.pdf' },
+  { id: 'E0839AFF3U', date: '12/02/2024', amount: '£22857.19', status: 'Active', pay: 'Paid', account: 'Halal Food Foundation', billin: 'N/A', pdf: 'invoice 3.pdf' },
 ];
 
 let globalSettings = {
