@@ -90,8 +90,8 @@ const products = {
   enterprise: [
     { id: 5, title: 'Office 365 E1 (Month to Month)', desc: 'The online versions of Office with email, instant messaging, HD video conferencing, plus 1 TB personal file storage and sharing. Does not includ...', price: 'From £110.80 licenses/month' },
     { id: 6, title: 'Office 365 E3', desc: 'The Office suite for PC and Mac with apps for tablets and phones, plus email, instant messaging, HD video conferencing, 1 TB personal file storage...', price: 'From £120.60 licenses/month' },
-    { id: 7, title: 'Office 365 E3 (Month to Month)', desc: 'The Office suite for PC and Mac with apps for tablets and phones, plus email, instant messaging, HD video conferencing, 1 TB personal file storage...', price: 'From £128.90 licenses/month' },
-    { id: 8, title: 'Office 365 E5 (Month to Month)', desc: 'The Office suite, plus email, instant messaging, HD video conferencing, 1 TB personal file storage and sharing, and advanced security, analytics and Audi...', price: 'From £147.70 licenses/month' },
+    { id: 7, title: 'Office 365 E3 ', desc: 'The Office suite for PC and Mac with apps for tablets and phones, plus email, instant messaging, MS Teams for Business, HD video conferencing, 1 TB personal file storage for each user. Provides personal cloud storage, offline access and sharing along with convenient online companions to Microsoft Word, Excel, PowerPoint', price: 'From £143.00 licenses/month' },
+    { id: 8, title: 'Microsoft Windows 11 Pro', desc: 'Designed for the world of hybrid work, Windows 11 can help you work more simply and seamlessly from anywhere. Buy and download Windows 11 for Professionals, Free Updates, Free software, free Upgrades', price: 'From £74.00 licenses/month' },
   ],
   standalone: [
     { id: 9, title: 'Exchange Online (Plan 1)', desc: 'Messaging, calendaring, and email archiving plan accessible from Outlook on PCs, the Web and mobile devices.', price: 'From £103.10 licenses/month' },
@@ -114,19 +114,19 @@ const products = {
 };
 
 const invoices = [
-  { id: 'EO489YUP4K', date: '03/09/2024', amount: '£3840.00', status: 'Deactivate', pay: 'Paid', account: 'Halal Food Foundation', billin: 'N/A', pdf: 'invoice 1.pdf' },
-  { id: 'EO890DBU6', date: '11/01/2024', amount: '£1728.00', status: 'Deactivate', pay: 'Paid', account: 'Halal Food Foundation', billin: 'N/A', pdf: 'invoice 2.pdf' },
-  { id: 'EO839AFF3U', date: '12/02/2024', amount: '£22857.19', status: 'Deactivate', pay: 'Paid', account: 'Halal Food Foundation', billin: 'N/A', pdf: 'invoice 3.pdf' },
-  { id: 'EO890DBU6', date: '11/01/2024', amount: '£1728.00', status: 'Deactivate', pay: 'Paid', account: 'Halal Food Foundation', billin: 'N/A', pdf: 'invoice 4.pdf' },
-  { id: 'EO785YOP', date: '14/11/2023', amount: '£1400.00', status: 'Deactivate', pay: 'Paid', account: 'Halal Food Foundation', billin: 'N/A', pdf: 'invoice 5.pdf' },
-  { id: 'EO8392PLE9N', date: '03/11/2023', amount: '£3895.70', status: 'Deactivate', pay: 'Paid', account: 'Halal Food Foundation', billin: 'N/A', pdf: 'invoice 6.pdf' },
-  { id: 'EO89ODBU6', date: '05/06/2022', amount: '£1728.00', status: 'Deactivate', pay: 'Paid', account: 'Halal Food Foundation', billin: 'N/A', pdf: 'invoice 7.pdf' },
-  { id: 'EO895HFA4L', date: '27/03/2023', amount: '£2301.12', status: 'Deactivate', pay: 'Paid', account: 'Halal Food Foundation', billin: 'N/A', pdf: 'invoice 8.pdf' },
-  { id: 'EO932HFAP5', date: '21/07/2022', amount: '£3999.00', status: 'Deactivate', pay: 'Paid', account: 'Halal Food Foundation', billin: 'N/A', pdf: 'invoice 9.pdf' },
-  { id: 'EO7051HFA50', date: '24/03/2025', amount: '£8553.06', status: 'Deactivate', pay: 'Paid', account: 'Halal Food Foundation', billin: 'N/A', pdf: 'invoice 10.pdf' },
-  { id: 'EO893HFA9W6+1', date: '03/10/2023', amount: '£217.44', status: 'Deactivate', pay: 'Paid', account: 'Halal Food Foundation', billin: 'N/A', pdf: 'invoice 11.pdf' },
-  { id: 'EO378HFA3R5+1', date: '03/10/2023', amount: '£217.44', status: 'Deactivate', pay: 'Paid', account: 'Halal Food Foundation', billin: 'N/A', pdf: 'invoice 12.pdf' },
-  { id: 'EO378HFA3R5+2', date: '22/02/2022', amount: '£434.88', status: 'Deactivate', pay: 'Paid', account: 'Halal Food Foundation', billin: 'N/A', pdf: 'invoice 13.pdf' },
+  { id: 'EO489YUP4K', date: '03/09/2024', amount: '£3840.00', status: 'Paid', pay: 'Paid', account: 'Halal Food Foundation', billin: 'N/A', pdf: 'invoice 1.pdf' },
+  { id: 'EO890DBU6', date: '11/01/2024', amount: '£1728.00', status: 'Paid', pay: 'Paid', account: 'Halal Food Foundation', billin: 'N/A', pdf: 'invoice 2.pdf' },
+  { id: 'EO839AFF3U', date: '12/02/2024', amount: '£22857.19', status: 'Paid', pay: 'Paid', account: 'Halal Food Foundation', billin: 'N/A', pdf: 'invoice 3.pdf' },
+  { id: 'EO890DBU6', date: '11/01/2024', amount: '£1728.00', status: 'Paid', pay: 'Paid', account: 'Halal Food Foundation', billin: 'N/A', pdf: 'invoice 4.pdf' },
+  { id: 'EO785YOP', date: '14/11/2023', amount: '£1400.00', status: 'Paid', pay: 'Paid', account: 'Halal Food Foundation', billin: 'N/A', pdf: 'invoice 5.pdf' },
+  { id: 'EO8392PLE9N', date: '03/11/2023', amount: '£3895.70', status: 'Paid', pay: 'Paid', account: 'Halal Food Foundation', billin: 'N/A', pdf: 'invoice 6.pdf' },
+  { id: 'EO89ODBU6', date: '05/06/2022', amount: '£1728.00', status: 'Paid', pay: 'Paid', account: 'Halal Food Foundation', billin: 'N/A', pdf: 'invoice 7.pdf' },
+  { id: 'EO895HFA4L', date: '27/03/2023', amount: '£2301.12', status: 'Paid', pay: 'Paid', account: 'Halal Food Foundation', billin: 'N/A', pdf: 'invoice 8.pdf' },
+  { id: 'EO932HFAP5', date: '21/07/2022', amount: '£3999.00', status: 'Paid', pay: 'Paid', account: 'Halal Food Foundation', billin: 'N/A', pdf: 'invoice 9.pdf' },
+  { id: 'EO7051HFA50', date: '24/03/2025', amount: '£8553.06', status: 'Paid', pay: 'Paid', account: 'Halal Food Foundation', billin: 'N/A', pdf: 'invoice 10.pdf' },
+  { id: 'EO893HFA9W6+1', date: '03/10/2023', amount: '£217.44', status: 'Paid', pay: 'Paid', account: 'Halal Food Foundation', billin: 'N/A', pdf: 'invoice 11.pdf' },
+  { id: 'EO378HFA3R5+1', date: '03/10/2023', amount: '£217.44', status: 'Paid', pay: 'Paid', account: 'Halal Food Foundation', billin: 'N/A', pdf: 'invoice 12.pdf' },
+  { id: 'EO378HFA3R5+2', date: '22/02/2022', amount: '£434.88', status: 'Paid', pay: 'Paid', account: 'Halal Food Foundation', billin: 'N/A', pdf: 'invoice 13.pdf' },
 ];
 
 let globalSettings = {
