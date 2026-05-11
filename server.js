@@ -29,7 +29,7 @@ const users = [
   { id: 3, name: 'Amir Masoom', username: 'amir@halalfood2021.onmicrosoft.com', licenses: 'Unlicensed' },
   { id: 4, name: 'Caner Guzelgonul', username: 'Caner@halalfood2021.onmicrosoft.com', licenses: 'Unlicensed' },
   { id: 5, name: 'Enas Alqatarneh (HFA)', username: 'enas@halalfood2021.onmicrosoft.com', licenses: 'Unlicensed' },
-  { id: 6, name: 'Haidir H', username: 'haidir@halalfood2021.onmicrosoft.com', licenses: 'Microsoft 365 Business Standard' },
+  { id: 6, name: 'Haidir H', username: 'haidir@halalfood2021.onmicrosoft.com', licenses: 'Unlicensed' },
   { id: 7, name: 'Hameed Yakubu', username: 'Hameed@halalfood2021.onmicrosoft.com', licenses: 'Unlicensed' },
   { id: 8, name: 'Hifza Ibrahim', username: 'hifza@halalfood2021.onmicrosoft.com', licenses: 'Unlicensed' },
   { id: 9, name: 'Imtiaz Hussain', username: 'imtiaz@halalfood2021.onmicrosoft.com', licenses: 'Unlicensed' },
