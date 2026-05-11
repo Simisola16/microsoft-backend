@@ -114,7 +114,7 @@ const products = {
 };
 
 const invoices = [
-  { id: 'EO3903HFAG8', date: '11/05/2026', amount: '£3432.00', status: 'Pending', pay: 'Pending', account: 'Halal Food Foundation', billin: 'N/A', pdf: 'invoice 365.pdf' },
+  { id: 'EO3903HFAG8', date: '11/05/2026', amount: '£3432.00', status: 'Paid', pay: 'Paid', account: 'Halal Food Foundation', billin: 'N/A', pdf: 'invoice 365.pdf' },
   { id: 'EO9274HFAY3', date: '11/05/2026', amount: '£1776.00', status: 'Pending', pay: 'Pending', account: 'Halal Food Foundation', billin: 'N/A', pdf: 'invoice windows 11 pro.pdf' },
   { id: 'EO489YUP4K', date: '03/09/2024', amount: '£3840.00', status: 'Paid', pay: 'Paid', account: 'Halal Food Foundation', billin: 'N/A', pdf: 'invoice 1.pdf' },
   { id: 'EO890DBU6', date: '11/01/2024', amount: '£1728.00', status: 'Paid', pay: 'Paid', account: 'Halal Food Foundation', billin: 'N/A', pdf: 'invoice 2.pdf' },
