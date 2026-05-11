@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "title": "slkjf",
+    "description": "lksjf",
+    "email": "lekan@halalfood2021.onmicrosoft.com",
+    "phone": "0000000000000",
+    "status": "In Progress",
+    "createdAt": "2026-05-11T13:25:25.343Z",
+    "replies": [
+      {
+        "message": "so whats up\n",
+        "sender": "Microsoft Support",
+        "createdAt": "2026-05-11T13:28:39.023Z"
+      }
+    ]
+  }
+]

@@ -3,6 +3,7 @@ const cors = require('cors');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const path = require('path');
+const fs = require('fs');
 require('dotenv').config();
 
 const app = express();
@@ -45,19 +46,24 @@ const users = [
   { id: 23, name: 'Umme Uroos', username: 'uroos@halalfood2021.onmicrosoft.com', licenses: 'Microsoft 365 Business Standard , Microsoft Power Automate Free' },
 ];
 
-const tickets = [
-  {
-    id: 1,
-    title: 'Cannot access Exchange',
-    description: 'I am getting a 403 error when trying to open Exchange admin center.',
-    severity: 'B',
-    email: 'lekan@halalfood2021.onmicrosoft.com',
-    phone: '+44 123456789',
-    status: 'Open',
-    createdAt: new Date().toISOString(),
-    replies: []
+const TICKETS_FILE = path.join(__dirname, 'tickets.json');
+
+let tickets = [];
+try {
+  if (fs.existsSync(TICKETS_FILE)) {
+    tickets = JSON.parse(fs.readFileSync(TICKETS_FILE, 'utf8'));
   }
-];
+} catch (err) {
+  console.error('Error loading tickets:', err);
+}
+
+const saveTickets = () => {
+  try {
+    fs.writeFileSync(TICKETS_FILE, JSON.stringify(tickets, null, 2));
+  } catch (err) {
+    console.error('Error saving tickets:', err);
+  }
+};
 
 const billingAccounts = [
   { id: 1, name: 'Halal Food Authority', location: 'London, LONDON GB', status: 'Active', type: 'Microsoft Customer Agreement' },
@@ -202,6 +208,7 @@ app.post('/api/tickets', verifyToken, (req, res) => {
   };
 
   tickets.push(newTicket);
+  saveTickets();
   res.status(201).json(newTicket);
 });
 
@@ -215,11 +222,12 @@ app.patch('/api/tickets/:id/reply', verifyToken, (req, res) => {
 
   ticket.replies.push({
     message,
-    sender: 'Admin',
+    sender: req.user.email === SUPPORT_ADMIN_USER.email ? 'Microsoft Support' : 'Customer',
     createdAt: new Date().toISOString()
   });
-  ticket.status = 'In Progress';
+  ticket.status = req.user.email === SUPPORT_ADMIN_USER.email ? 'In Progress' : 'Open';
 
+  saveTickets();
   res.json(ticket);
 });
 
