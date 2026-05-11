@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const path = require('path');
 const fs = require('fs');
+const mongoose = require('mongoose');
 const morgan = require('morgan');
 require('dotenv').config();
 
@@ -48,24 +49,31 @@ const users = [
   { id: 23, name: 'Umme Uroos', username: 'uroos@halalfood2021.onmicrosoft.com', licenses: 'Microsoft 365 Business Standard , Microsoft Power Automate Free' },
 ];
 
-const TICKETS_FILE = path.join(__dirname, 'tickets.json');
+// MongoDB Connection
+mongoose.connect(process.env.MONGODB_URI)
+  .then(() => console.log('Connected to MongoDB'))
+  .catch(err => console.error('MongoDB connection error:', err));
 
-let tickets = [];
-try {
-  if (fs.existsSync(TICKETS_FILE)) {
-    tickets = JSON.parse(fs.readFileSync(TICKETS_FILE, 'utf8'));
-  }
-} catch (err) {
-  console.error('Error loading tickets:', err);
-}
+// Ticket Schema
+const ticketSchema = new mongoose.Schema({
+  title: String,
+  description: String,
+  severity: { type: String, default: 'Normal' },
+  email: String,
+  phone: String,
+  status: { type: String, default: 'Open' },
+  createdAt: { type: Date, default: Date.now },
+  replies: [{
+    message: String,
+    sender: String,
+    createdAt: { type: Date, default: Date.now }
+  }]
+}, {
+  toJSON: { virtuals: true },
+  toObject: { virtuals: true }
+});
 
-const saveTickets = () => {
-  try {
-    fs.writeFileSync(TICKETS_FILE, JSON.stringify(tickets, null, 2));
-  } catch (err) {
-    console.error('Error saving tickets:', err);
-  }
-};
+const Ticket = mongoose.model('Ticket', ticketSchema);
 
 const billingAccounts = [
   { id: 1, name: 'Halal Food Authority', location: 'London, LONDON GB', status: 'Active', type: 'Microsoft Customer Agreement' },
@@ -203,61 +211,68 @@ app.get('/api/settings', verifyToken, (req, res) => {
 });
 
 // Ticket Routes
-app.get('/api/tickets', verifyToken, (req, res) => {
-  res.json(tickets);
+app.get('/api/tickets', verifyToken, async (req, res) => {
+  try {
+    const tickets = await Ticket.find();
+    res.json(tickets);
+  } catch (err) {
+    res.status(500).json({ message: 'Error fetching tickets' });
+  }
 });
 
-app.post('/api/tickets', verifyToken, (req, res) => {
+app.post('/api/tickets', verifyToken, async (req, res) => {
   const { title, description, severity, email, phone } = req.body;
   if (!title || !description || !email) return res.status(400).json({ message: 'Missing required fields' });
 
-  const newTicket = {
-    id: tickets.length + 1,
-    title,
-    description,
-    severity,
-    email,
-    phone,
-    status: 'Open',
-    createdAt: new Date().toISOString(),
-    replies: []
-  };
-
-  tickets.push(newTicket);
-  saveTickets();
-  res.status(201).json(newTicket);
+  try {
+    const newTicket = new Ticket({
+      title,
+      description,
+      severity,
+      email,
+      phone
+    });
+    await newTicket.save();
+    res.status(201).json(newTicket);
+  } catch (err) {
+    res.status(500).json({ message: 'Error creating ticket' });
+  }
 });
 
-app.patch('/api/tickets/:id/reply', verifyToken, (req, res) => {
+app.patch('/api/tickets/:id/reply', verifyToken, async (req, res) => {
   const { id } = req.params;
   const { message } = req.body;
-  const ticket = tickets.find(t => t.id === parseInt(id));
 
-  if (!ticket) return res.status(404).json({ message: 'Ticket not found' });
   if (!message) return res.status(400).json({ message: 'Reply message is required' });
 
-  ticket.replies.push({
-    message,
-    sender: req.user.email === SUPPORT_ADMIN_USER.email ? 'Microsoft Support' : 'Customer',
-    createdAt: new Date().toISOString()
-  });
-  ticket.status = req.user.email === SUPPORT_ADMIN_USER.email ? 'In Progress' : 'Open';
+  try {
+    const ticket = await Ticket.findById(id);
+    if (!ticket) return res.status(404).json({ message: 'Ticket not found' });
 
-  saveTickets();
-  res.json(ticket);
+    ticket.replies.push({
+      message,
+      sender: req.user.email === SUPPORT_ADMIN_USER.email ? 'Microsoft Support' : 'Customer'
+    });
+    
+    ticket.status = req.user.email === SUPPORT_ADMIN_USER.email ? 'In Progress' : 'Open';
+    await ticket.save();
+    res.json(ticket);
+  } catch (err) {
+    res.status(500).json({ message: 'Error adding reply' });
+  }
 });
 
-app.delete('/api/tickets/:id', verifyToken, (req, res) => {
+app.delete('/api/tickets/:id', verifyToken, async (req, res) => {
   if (req.user.role !== 'support') return res.status(403).json({ message: 'Access denied. Support only.' });
   
   const { id } = req.params;
-  const index = tickets.findIndex(t => t.id === parseInt(id));
-
-  if (index === -1) return res.status(404).json({ message: 'Ticket not found' });
-
-  tickets.splice(index, 1);
-  saveTickets();
-  res.json({ message: 'Ticket deleted successfully' });
+  try {
+    const ticket = await Ticket.findByIdAndDelete(id);
+    if (!ticket) return res.status(404).json({ message: 'Ticket not found' });
+    res.json({ message: 'Ticket deleted successfully' });
+  } catch (err) {
+    res.status(500).json({ message: 'Error deleting ticket' });
+  }
 });
 
 app.patch('/api/settings', verifyToken, (req, res) => {
