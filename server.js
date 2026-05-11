@@ -37,6 +37,20 @@ const users = [
   { id: 23, name: 'Umme Uroos', username: 'uroos@halalfood2021.onmicrosoft.com', licenses: 'Microsoft 365 Business Standard , Microsoft Power Automate Free' },
 ];
 
+const tickets = [
+  { 
+    id: 1, 
+    title: 'Cannot access Exchange', 
+    description: 'I am getting a 403 error when trying to open Exchange admin center.', 
+    severity: 'B', 
+    email: 'lekan@halalfood2021.onmicrosoft.com', 
+    phone: '+44 123456789',
+    status: 'Open',
+    createdAt: new Date().toISOString(),
+    replies: []
+  }
+];
+
 const billingAccounts = [
   { id: 1, name: 'Halal Food Authority', location: 'London, LONDON GB', status: 'Active', type: 'Microsoft Customer Agreement' },
   { id: 2, name: 'Halal Food Foundation', location: 'London, LONDON GB', status: 'Active', type: 'Microsoft Online Subscription Agreement' }
@@ -63,14 +77,14 @@ const products = {
   ],
   nonprofit: {
     remoteWork: [
-      { id: 13, title: 'Microsoft 365 Business Premium (Nonprofit Staff Pricing)', desc: 'Best for businesses that need all the apps and services included in Business Standard plus advanced cyber threat protection and device...', price: 'From £104.20 licenses/month' },
-      { id: 14, title: 'Microsoft 365 E3 (Nonprofit Staff Pricing)', desc: 'Office 365 E3, Enterprise Mobility + Security E3, and Windows 10/11 Enterprise E3. This per-user licensed suite of products offers users best-in-cla...', price: 'From £107.70 licenses/month' },
-      { id: 15, title: 'Planner and Project Plan 3 (Nonprofit Staff Pricing)', desc: 'Achieve comprehensive project management with our solution that keeps your projects, resources, and teams organized and on track. Plan, track, an...', price: 'From £109.20 licenses/month' },
-      { id: 16, title: 'Microsoft 365 E5 (Nonprofit Staff Pricing)', desc: 'Office 365 E5, Enterprise Mobility + Security E5, and Windows 10/11 Enterprise E5. This per-user licensed suite of products offers customers the...', price: 'From £119.60 licenses/month' },
+      { id: 13, title: 'Microsoft 365 Business Premium (Nonprofit Staff Pricing)', desc: 'Best for businesses that need all the apps and services included in Business Standard plus advanced cyber threat protection and device...', price: 'Free licenses' },
+      { id: 14, title: 'Microsoft 365 E3 (Nonprofit Staff Pricing)', desc: 'Office 365 E3, Enterprise Mobility + Security E3, and Windows 10/11 Enterprise E3. This per-user licensed suite of products offers users best-in-cla...', price: 'Free licenses' },
+      { id: 15, title: 'Planner and Project Plan 3 (Nonprofit Staff Pricing)', desc: 'Achieve comprehensive project management with our solution that keeps your projects, resources, and teams organized and on track. Plan, track, an...', price: 'Free licenses' },
+      { id: 16, title: 'Microsoft 365 E5 (Nonprofit Staff Pricing)', desc: 'Office 365 E5, Enterprise Mobility + Security E5, and Windows 10/11 Enterprise E5. This per-user licensed suite of products offers customers the...', price: 'Free licenses' },
     ],
     analytics: [
-      { id: 17, title: 'Microsoft Fabric (Free) (Nonprofit Staff Pricing)', desc: 'A cloud-based business analytics service that enables anyone to visualize and analyze data with greater speed, efficiency, and understanding. It...', price: 'Free' },
-      { id: 18, title: 'Power BI Pro (Nonprofit Staff Pricing)', desc: 'A cloud-based business analytics service that enables anyone to visualize and analyze data with greater speed, efficiency, and understanding. Pow...', price: 'From £103.20 licenses/month' },
+      { id: 17, title: 'Microsoft Fabric (Free) (Nonprofit Staff Pricing)', desc: 'A cloud-based business analytics service that enables anyone to visualize and analyze data with greater speed, efficiency, and understanding. It...', price: 'Free licenses' },
+      { id: 18, title: 'Power BI Pro (Nonprofit Staff Pricing)', desc: 'A cloud-based business analytics service that enables anyone to visualize and analyze data with greater speed, efficiency, and understanding. Pow...', price: 'Free licenses' },
     ]
   }
 };
@@ -85,8 +99,13 @@ let globalSettings = {
 };
 
 const ADMIN_USER = {
-  email: 'lekan@halalfood2021.onmicrosoft.com',
+  email: 'ict@halalfood2021.onmicrosoft.com',
   password: 'Muhayad2008' // In a real app, this would be hashed
+};
+
+const SUPPORT_ADMIN_USER = {
+  email: 'supportadmin@halalfood2021.onmicrosoft.com',
+  password: 'SupportPassword2026'
 };
 
 const JWT_SECRET = process.env.JWT_SECRET || 'microsoft_admin_secret_key';
@@ -110,12 +129,21 @@ app.post('/api/login', async (req, res) => {
   const { email, password } = req.body;
 
   if (email === ADMIN_USER.email && password === ADMIN_USER.password) {
-    const token = jwt.sign({ email: ADMIN_USER.email }, JWT_SECRET, { expiresIn: '1h' });
+    const token = jwt.sign({ email: ADMIN_USER.email, role: 'admin' }, JWT_SECRET, { expiresIn: '1h' });
     res.json({
       token,
       user: {
         email: ADMIN_USER.email,
         name: 'Administrator'
+      }
+    });
+  } else if (email === SUPPORT_ADMIN_USER.email && password === SUPPORT_ADMIN_USER.password) {
+    const token = jwt.sign({ email: SUPPORT_ADMIN_USER.email, role: 'support' }, JWT_SECRET, { expiresIn: '1h' });
+    res.json({
+      token,
+      user: {
+        email: SUPPORT_ADMIN_USER.email,
+        name: 'Support Administrator'
       }
     });
   } else {
@@ -141,6 +169,49 @@ app.get('/api/invoices', verifyToken, (req, res) => {
 
 app.get('/api/settings', verifyToken, (req, res) => {
   res.json(globalSettings);
+});
+
+// Ticket Routes
+app.get('/api/tickets', verifyToken, (req, res) => {
+  res.json(tickets);
+});
+
+app.post('/api/tickets', verifyToken, (req, res) => {
+  const { title, description, severity, email, phone } = req.body;
+  if (!title || !description || !email) return res.status(400).json({ message: 'Missing required fields' });
+
+  const newTicket = {
+    id: tickets.length + 1,
+    title,
+    description,
+    severity,
+    email,
+    phone,
+    status: 'Open',
+    createdAt: new Date().toISOString(),
+    replies: []
+  };
+
+  tickets.push(newTicket);
+  res.status(201).json(newTicket);
+});
+
+app.patch('/api/tickets/:id/reply', verifyToken, (req, res) => {
+  const { id } = req.params;
+  const { message } = req.body;
+  const ticket = tickets.find(t => t.id === parseInt(id));
+
+  if (!ticket) return res.status(404).json({ message: 'Ticket not found' });
+  if (!message) return res.status(400).json({ message: 'Reply message is required' });
+
+  ticket.replies.push({
+    message,
+    sender: 'Admin',
+    createdAt: new Date().toISOString()
+  });
+  ticket.status = 'In Progress';
+
+  res.json(ticket);
 });
 
 app.patch('/api/settings', verifyToken, (req, res) => {
