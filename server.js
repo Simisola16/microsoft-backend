@@ -10,7 +10,13 @@ const PORT = process.env.PORT || 5000;
 
 app.use(cors());
 app.use(express.json());
-app.use('/invoice', express.static(path.join(__dirname, 'invoice')));
+app.use('/invoice', express.static(path.join(__dirname, 'invoice'), {
+  setHeaders: (res, path) => {
+    if (path.endsWith('.pdf')) {
+      res.setHeader('Content-Disposition', 'attachment');
+    }
+  }
+}));
 
 // Mock Data
 const users = [
