@@ -51,7 +51,7 @@ const users = [
 
 // MongoDB Connection
 mongoose.connect(process.env.MONGODB_URI)
-  .then(() => console.log('Connected to MongoDB'))
+  .then(() => console.log('Successfully connected to MongoDB Atlas'))
   .catch(err => console.error('MongoDB connection error:', err));
 
 // Ticket Schema
@@ -216,7 +216,8 @@ app.get('/api/tickets', verifyToken, async (req, res) => {
     const tickets = await Ticket.find();
     res.json(tickets);
   } catch (err) {
-    res.status(500).json({ message: 'Error fetching tickets' });
+    console.error('Fetch tickets error:', err);
+    res.status(500).json({ message: 'Error fetching tickets', error: err.message });
   }
 });
 
