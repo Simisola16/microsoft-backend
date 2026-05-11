@@ -231,6 +231,19 @@ app.patch('/api/tickets/:id/reply', verifyToken, (req, res) => {
   res.json(ticket);
 });
 
+app.delete('/api/tickets/:id', verifyToken, (req, res) => {
+  if (req.user.role !== 'support') return res.status(403).json({ message: 'Access denied. Support only.' });
+  
+  const { id } = req.params;
+  const index = tickets.findIndex(t => t.id === parseInt(id));
+
+  if (index === -1) return res.status(404).json({ message: 'Ticket not found' });
+
+  tickets.splice(index, 1);
+  saveTickets();
+  res.json({ message: 'Ticket deleted successfully' });
+});
+
 app.patch('/api/settings', verifyToken, (req, res) => {
   const { accountType } = req.body;
   if (accountType) {
