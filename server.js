@@ -90,8 +90,9 @@ const products = {
 };
 
 const invoices = [
-  { id: 'E0700ZNN9K', date: '05/05/2026', amount: '£108.10', status: 'N/A', pay: 'N/A', account: 'Halal Food Foundation', billin: 'N/A' },
-  { id: 'E0700Z7T08', date: '12/03/2026', amount: '£160.72', status: 'N/A', pay: 'N/A', account: 'Halal Food Foundation', billin: 'N/A' },
+  { id: 'E0489YUP4K', date: '03/09/2024', amount: '£3840.00', status: 'Active', pay: 'Paid', account: 'Halal Food Foundation', billin: 'N/A' },
+  { id: 'EO890DBU6', date: '11/01/2024', amount: '£1728.00', status: 'Active', pay: 'Paid', account: 'Halal Food Foundation', billin: 'N/A' },
+  { id: 'E0839AFF3U', date: '12/02/2024', amount: '£22857.19', status: 'Active', pay: 'Paid', account: 'Halal Food Foundation', billin: 'N/A' },
 ];
 
 let globalSettings = {
