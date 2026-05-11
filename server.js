@@ -106,9 +106,19 @@ const products = {
 };
 
 const invoices = [
-  { id: 'E0489YUP4K', date: '03/09/2024', amount: '£3840.00', status: 'Active', pay: 'Paid', account: 'Halal Food Foundation', billin: 'N/A', pdf: 'invoice 1.pdf' },
+  { id: 'EO489YUP4K', date: '03/09/2024', amount: '£3840.00', status: 'Active', pay: 'Paid', account: 'Halal Food Foundation', billin: 'N/A', pdf: 'invoice 1.pdf' },
   { id: 'EO890DBU6', date: '11/01/2024', amount: '£1728.00', status: 'Active', pay: 'Paid', account: 'Halal Food Foundation', billin: 'N/A', pdf: 'invoice 2.pdf' },
-  { id: 'E0839AFF3U', date: '12/02/2024', amount: '£22857.19', status: 'Active', pay: 'Paid', account: 'Halal Food Foundation', billin: 'N/A', pdf: 'invoice 3.pdf' },
+  { id: 'EO839AFF3U', date: '12/02/2024', amount: '£22857.19', status: 'Active', pay: 'Paid', account: 'Halal Food Foundation', billin: 'N/A', pdf: 'invoice 3.pdf' },
+  { id: 'EO890DBU6', date: '11/01/2024', amount: '£1728.00', status: 'Active', pay: 'Paid', account: 'Halal Food Foundation', billin: 'N/A', pdf: 'invoice 4.pdf' },
+  { id: 'EO785YOP', date: '14/11/2023', amount: '£1400.00', status: 'Active', pay: 'Paid', account: 'Halal Food Foundation', billin: 'N/A', pdf: 'invoice 5.pdf' },
+  { id: 'EO8392PLE9N', date: '03/11/2023', amount: '£3895.70', status: 'Active', pay: 'Paid', account: 'Halal Food Foundation', billin: 'N/A', pdf: 'invoice 6.pdf' },
+  { id: 'EO89ODBU6', date: '05/06/2022', amount: '£1728.00', status: 'Active', pay: 'Paid', account: 'Halal Food Foundation', billin: 'N/A', pdf: 'invoice 7.pdf' },
+  { id: 'EO895HFA4L', date: '27/03/2023', amount: '£2301.12', status: 'Active', pay: 'Paid', account: 'Halal Food Foundation', billin: 'N/A', pdf: 'invoice 8.pdf' },
+  { id: 'EO932HFAP5', date: '21/07/2022', amount: '£3999.00', status: 'Active', pay: 'Paid', account: 'Halal Food Foundation', billin: 'N/A', pdf: 'invoice 9.pdf' },
+  { id: 'EO7051HFA50', date: '24/03/2025', amount: '£8553.06', status: 'Active', pay: 'Paid', account: 'Halal Food Foundation', billin: 'N/A', pdf: 'invoice 10.pdf' },
+  { id: 'EO893HFA9W6+1', date: '03/10/2023', amount: '£217.44', status: 'Active', pay: 'Paid', account: 'Halal Food Foundation', billin: 'N/A', pdf: 'invoice 11.pdf' },
+  { id: 'EO378HFA3R5+1', date: '03/10/2023', amount: '£217.44', status: 'Active', pay: 'Paid', account: 'Halal Food Foundation', billin: 'N/A', pdf: 'invoice 12.pdf' },
+  { id: 'EO378HFA3R5+2', date: '22/02/2022', amount: '£434.88', status: 'Active', pay: 'Paid', account: 'Halal Food Foundation', billin: 'N/A', pdf: 'invoice 13.pdf' },
 ];
 
 let globalSettings = {
